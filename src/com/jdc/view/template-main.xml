@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+	<!-- =======================  main  ========== ================= --> 
+	<definition name="home" template="/WEB-INF/view/main/main.jsp"/>	
+	<definition name="index" template="/WEB-INF/view/main/index.jsp"/>	
+	
+	<definition name="googlecode" template="/resource/googleb902e8844852947e.html"/>	
+	
+	<!-- =======================  ajajx  ========== ================= -->
+	 <definition name="json" 	template="/WEB-INF/view/json.jsp" />
+	 
+	 <!-- =======================  member  ========== ================= -->
+	<definition name="information" 	template="/WEB-INF/view/member/join.jsp" />
+	
+	 <!-- =======================  board  ========== ================= -->
+	<definition name="category" 	template="/WEB-INF/view/main/board/category.jsp" />
+	<definition name="list" 		template="/WEB-INF/view/main/board/list.jsp" />
+	<definition name="searchList" 	template="/WEB-INF/view/main/board/searchList.jsp" />	
+	<definition name="content" 		template="/WEB-INF/view/main/board/content.jsp" />
+	<definition name="ajaxList" 	template="/WEB-INF/view/main/board/ajaxList.jsp" />
+	<definition name="content" 		template="/WEB-INF/view/main/board/content.jsp" />
+	<definition name="modify" 		template="/WEB-INF/view/main/board/modify.jsp" />
+	<definition name="write" 		template="/WEB-INF/view/main/board/write.jsp" />	
+	<definition name="json"			template="/WEB-INF/view/main/board/json.jsp"/>
+	
+	<!-- =======================  board / answer  ========== ================= -->
+	<definition name="regist" 		template="/WEB-INF/view/main/board/answer/regist.jsp" />	
+	<definition name="modify" 		template="/WEB-INF/view/main/board/answer/modify.jsp" />	
+</tiles-definitions>

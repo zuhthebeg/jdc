@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+	<!-- ####################  layout   #################### --> 
+	<definition name="layoutHome" template="/WEB-INF/view/home/tiles/layout.jsp">
+		<put-attribute name="title" value="JCreative" />
+		<put-attribute name="header" value="/WEB-INF/view/home/tiles/header.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/view/home/tiles/footer.jsp" />
+	</definition>		
+		
+
+	<!-- =======================  main  =========================== --> 
+	<definition name="jhome" extends="layoutHome">
+		<put-attribute name="content" value="/WEB-INF/view/home/main.jsp" />
+	</definition>
+	
+	<definition name="about" extends="layoutHome">
+		<put-attribute name="content" value="/WEB-INF/view/home/about.jsp" />
+	</definition>
+	
+	<definition name="solution" extends="layoutHome">
+		<put-attribute name="content" value="/WEB-INF/view/home/project/solution.jsp" />
+	</definition>
+	
+	<definition name="jms" extends="layoutHome">
+		<put-attribute name="content" value="/WEB-INF/view/home/project/solution/jms.jsp" />
+	</definition>
+	
+	<definition name="cms" extends="layoutHome">
+		<put-attribute name="content" value="/WEB-INF/view/home/project/solution/cms.jsp" />
+	</definition>
+	
+	<definition name="vms" extends="layoutHome">
+		<put-attribute name="content" value="/WEB-INF/view/home/project/solution/vms.jsp" />
+	</definition>
+	
+	<definition name="rnd" extends="layoutHome">
+		<put-attribute name="content" value="/WEB-INF/view/home/project/rnd.jsp" />
+	</definition>
+	
+	<definition name="maintenance" extends="layoutHome">
+		<put-attribute name="content" value="/WEB-INF/view/home/project/maintenance.jsp" />
+	</definition>
+</tiles-definitions>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Reply">
+	<typeAlias alias="map" type="java.util.Map" />
+	<typeAlias alias="str" type="java.lang.String" />
+	<typeAlias alias="int" type="java.lang.Integer" />
+
+<!-- 	<select id="getArticleListByCategoryIdx" resultClass="board"> 
+		select
+	        (select name from member where idx = b.member_idx) as writer, b.* 
+	    from
+	        Board b
+	    order by
+	        idx desc  
+	</select>
+	<select id="getArticle" parameterClass="int" resultClass="board">
+		select * from board where idx = #value#
+	</select>
+	<delete id="deleteArticle" parameterClass="int">
+		delete from board where idx = #value#
+	</delete>
+	
+	<insert id="insertArticle" parameterClass="board">
+		<selectKey keyProperty="idx" resultClass="Integer">
+			select board_seq.nextval from dual
+		</selectKey>
+		INSERT INTO BOARD 
+		 	(IDX, SUBJECT, MEMBER_IDX, REGDATE, READ, CONTENT, REGIP, FILENAME)
+		 VALUES 
+		 	(#idx#, #subject#, #member_idx#, sysdate, #read#, #content#, #regip#, #filename#)
+	
+	</insert>
+	<update id="setArticleCount" parameterClass="board">
+		update board set read = #read# where idx = #idx#
+	</update> -->
+	
+</sqlMap>

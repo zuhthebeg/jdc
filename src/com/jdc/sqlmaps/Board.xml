@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Board">
+	<typeAlias alias="map" type="java.util.Map" />
+	<typeAlias alias="str" type="java.lang.String" />
+	<typeAlias alias="int" type="java.lang.Integer" />
+	<typeAlias alias="board" type="com.jdc.bean.Board" />
+	<typeAlias alias="codetype" type="com.jdc.bean.Codetype" />
+	
+	<select id="getArticleListByCategoryIdx" parameterClass="int" resultClass="board">
+		SELECT
+	        *
+	    FROM
+	        article_view
+	    WHERE
+	    	category_idx = $value$
+	</select>
+	
+	<select id="getArticleByArticleIdx" parameterClass="int" resultClass="board">
+		SELECT
+	        *
+	    FROM
+	        article_view
+	    WHERE
+	    	article_idx = $value$
+	</select>
+	
+	<select id="getCodetypeList" resultClass="codetype">
+		SELECT
+	        *
+	    FROM
+	        article_codetype
+	</select>
+	
+	<update id="updateArticle" parameterClass="board">
+		UPDATE 
+			article
+		SET
+			CODETYPE_IDX = $codetype_idx$,
+			CONTENT = #content#,
+			IS_PUBLIC = #is_public#
+			TITLE = #title#
+			CODE = #code#
+			ERRORCODE = #errorcode#
+			ERROR_TYPE = #error_type#
+			SUPPORT_TYPE = #support_type#
+		WHERE
+			ARTICLE_IDX = $article_idx$
+	</update>
+	
+	<update id="updateArticleCnt" parameterClass="int">
+		UPDATE 
+			article
+		SET
+			CNT = (CNT + 1)
+		WHERE
+			ARTICLE_IDX = $value$
+	</update>
+	
+	<insert id="insertArticle" parameterClass="board" >
+		<selectKey keyProperty="article_idx" resultClass="int">
+			select article_seq.nextval from dual
+		</selectKey>
+		INSERT INTO 
+
+			ARTICLE(ARTICLE_IDX, CATEGORY_IDX, CODETYPE_IDX, CONTENT, IS_PUBLIC, TITLE, USER_IDX, CODE, ERRORCODE, ERROR_TYPE, SUPPORT_TYPE)
+		VALUES(#article_idx#, $category_idx$, $codetype_idx$, #content#, #is_public#, #title#, $user_idx$, #code#, #errorcode#, #error_type#, #support_type#)
+	</insert>
+	
+	<delete id="deleteArticle">
+		DELETE 
+		FROM ARTICLE
+		WHERE ARTICLE_IDX = $value$
+	</delete>
+
+<!-- 	<select id="getArticleListByCategoryIdx" resultClass="board"> 
+		select
+	        (select name from member where idx = b.member_idx) as writer, b.* 
+	    from
+	        Board b
+	    order by
+	        idx desc  
+	</select>
+	<select id="getArticle" parameterClass="int" resultClass="board">
+		select * from board where idx = #value#
+	</select>
+	<delete id="deleteArticle" parameterClass="int">
+		delete from board where idx = #value#
+	</delete>
+	
+	<insert id="insertArticle" parameterClass="board">
+		<selectKey keyProperty="idx" resultClass="Integer">
+			select board_seq.nextval from dual
+		</selectKey>
+		INSERT INTO BOARD 
+		 	(IDX, SUBJECT, MEMBER_IDX, REGDATE, READ, CONTENT, REGIP, FILENAME)
+		 VALUES 
+		 	(#idx#, #subject#, #member_idx#, sysdate, #read#, #content#, #regip#, #filename#)
+	
+	</insert>
+	<update id="setArticleCount" parameterClass="board">
+		update board set read = #read# where idx = #idx#
+	</update> -->
+	<select id="searchQuestionCodeByText" parameterClass="str" resultClass="board">
+		select * from article_view where code like '%$value$%' or content like '%$value$%' or title like '%$value$%'
+	</select>
+	
+	<select id="searchAnswerCodeByText" parameterClass="str" resultClass="board">
+		select * from answer_view where debug_code like '%$value$%' or content like '%$value$%' or title like '%$value$%'
+	</select>
+
+	<select id="getArticleListByUserIdx" parameterClass="int" resultClass="board">
+		select * from article_view where user_idx = #value# and rownum  <![CDATA[ <= ]]> 10 order by regdate desc
+	</select>
+	
+	<select id="getRecentArticleList" parameterClass="int" resultClass="board">
+		select * from article_view where rownum  <![CDATA[ <= ]]> #value# order by regdate desc
+	</select>
+	
+</sqlMap>

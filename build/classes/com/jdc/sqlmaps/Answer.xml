@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Board">
+	<typeAlias alias="map" type="java.util.Map" />
+	<typeAlias alias="str" type="java.lang.String" />
+	<typeAlias alias="int" type="java.lang.Integer" />
+	<typeAlias alias="answer" type="com.jdc.bean.Answer" />
+	<typeAlias alias="rcmd" type="com.jdc.bean.Recommend" />
+	
+	<select id="getAnswerListByArticleId" parameterClass="int" resultClass="answer">
+		SELECT
+			*
+		FROM
+			ANSWER_VIEW
+		WHERE
+			ARTICLE_IDX = $value$
+		ORDER BY is_choice, satisfy, regdate
+	</select>
+	
+	<select id="getAnswerByAnswerId" parameterClass="int" resultClass="answer">
+		SELECT
+			*
+		FROM
+			ANSWER_VIEW
+		WHERE
+			ANSWER_IDX = $value$
+	</select>
+	
+	<insert id="insertAnswer" parameterClass="answer">
+		INSERT INTO
+			ARTICLE_ANSWER
+				(ANSWER_IDX, ARTICLE_IDX, TITLE, CONTENT, DEBUG_CODE, CODE_TYPE, USER_IDX)
+		VALUES
+			(answer_seq.nextval, $article_idx$, #title#, #content#, #debug_code#, #code_type#, #user_idx#)
+	</insert>
+	
+	<update id="updateAnswer" parameterClass="answer">
+		UPDATE 
+			ARTICLE_ANSWER
+		SET
+			ARTICLE_IDX = #article_idx#,
+			TITLE = #title#,
+			CONTENT = #content#,
+			SATISFY = #satisfy#,
+			IS_CHOICE = #is_choice#
+			DEBUG_CODE = #debug_code#
+		WHERE
+			ANSWER_IDX = $answer_idx$
+	</update>
+	
+	<update id="choiceAnswer" parameterClass="answer">
+		UPDATE 
+			ARTICLE_ANSWER
+		SET
+			WRITER_COMMENT = #writer_comment#,
+			SATISFY = #satisfy#,
+			IS_CHOICE = 1
+		WHERE
+			ANSWER_IDX = #answer_idx#
+	</update>
+	
+	<delete id="deleteAnswer" parameterClass="int">
+		DELETE
+		FROM
+			ARTICLE_ANSWER
+		WHERE
+			ANSWER_IDX = $value$
+	</delete>
+
+	<insert id="insertRecommend" parameterClass="rcmd" >
+		INSERT INTO RECOMMEND 
+			(TARGET_IDX, TARGET, REGIP) 
+		VALUES 
+			(#target_idx#, #target#, #regip#) 
+	</insert>
+	
+	<select id="getCountRecommendByRegip" parameterClass="rcmd" resultClass="int">
+		select count(*) from recommend 
+		where 	regip = #regip# 
+		and target = #target# 
+		and target_idx = #target_idx#
+	</select>
+<!-- 	<select id="getArticleListByCategoryIdx" resultClass="board"> 
+		select
+	        (select name from member where idx = b.member_idx) as writer, b.* 
+	    from
+	        Board b
+	    order by
+	        idx desc  
+	</select>
+	<select id="getArticle" parameterClass="int" resultClass="board">
+		select * from board where idx = #value#
+	</select>
+	<delete id="deleteArticle" parameterClass="int">
+		delete from board where idx = #value#
+	</delete>
+	
+	<insert id="insertArticle" parameterClass="board">
+		<selectKey keyProperty="idx" resultClass="Integer">
+			select board_seq.nextval from dual
+		</selectKey>
+		INSERT INTO BOARD 
+		 	(IDX, SUBJECT, MEMBER_IDX, REGDATE, READ, CONTENT, REGIP, FILENAME)
+		 VALUES 
+		 	(#idx#, #subject#, #member_idx#, sysdate, #read#, #content#, #regip#, #filename#)
+	
+	</insert>
+	<update id="setArticleCount" parameterClass="board">
+		update board set read = #read# where idx = #idx#
+	</update> -->
+	
+</sqlMap>

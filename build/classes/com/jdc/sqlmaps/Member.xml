@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Member">
+	<typeAlias alias="map" type="java.util.Map" />
+	<typeAlias alias="str" type="java.lang.String" />
+	<typeAlias alias="int" type="java.lang.Integer" />
+	<typeAlias alias="member" type="com.jdc.bean.Member" />
+	<typeAlias alias="category" type="com.jdc.bean.Category" />
+	
+
+	<insert id="insertMember" parameterClass="member">
+		INSERT INTO MEMBER(USER_IDX, EMAIL, NAME, PASSWD)
+		VALUES (MEMBER_SEQ.NEXTVAL , #email#, #name#,  #passwd#) 
+	</insert>
+
+	<select id="getMemberByIdx" parameterClass="int" resultClass="member">
+		SELECT
+			*
+		FROM
+			view_member
+		WHERE
+			user_idx = #value#
+	</select>
+	
+	<select id="getUser" parameterClass="member" resultClass="member">
+		SELECT
+			*
+		FROM
+			member
+		WHERE
+			email = #email#
+	    and
+	      passwd = #passwd#
+	</select>
+	
+	<delete id="deleteMemberByIdx" parameterClass="int">
+		DELETE
+			member
+		WHERE
+			user_idx = #value#
+	</delete>
+	
+	<select id="getCategoryListByParIdx" parameterClass="int" resultClass="category">
+	  SELECT
+		*
+	  FROM
+	  CATEGORY
+	  START WITH PARENT_IDX = $value$
+	  CONNECT BY PRIOR CATEGORY_IDX = PARENT_IDX
+	  ORDER SIBLINGS BY CATEGORY_IDX
+	</select>
+		
+	<select id="searchCategoryListByText" parameterClass="str" resultClass="category">
+		select * from CATEGORY where description like '%$text$%' or name like '%$text$%' 
+	</select>
+	
+	<select id="getCategoryByIdx" parameterClass="int" resultClass="category">
+		select * from category where category_idx = #value#
+	</select>
+	
+	<select id="getUserByEmail" parameterClass="str" resultClass="member">
+		SELECT
+			*
+		FROM
+			MEMBER
+		WHERE
+			EMAIL = #value#
+	</select>
+	
+	<select id="getWriterEmailByArticleIdx" parameterClass="int" resultClass="str">
+		select email from member m, article a where a.user_idx = m.user_idx and a.article_idx = #value#
+	</select>
+</sqlMap>
